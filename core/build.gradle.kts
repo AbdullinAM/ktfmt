@@ -16,6 +16,7 @@
 
 import com.facebook.ktfmt.GenerateKtfmtFileTask
 import com.ncorti.ktfmt.gradle.tasks.KtfmtCheckTask
+import kotlinx.benchmark.gradle.benchmark
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
@@ -28,11 +29,18 @@ plugins {
   id("org.jetbrains.dokka-javadoc")
   id("signing")
   id("ktfmt.ktfmt-file-generator")
+  alias(libs.plugins.kotlinxBenchmark)
 }
 
 repositories {
   mavenLocal()
   mavenCentral()
+}
+
+sourceSets { create("benchmarks") }
+
+val benchmarksImplementation by configurations.getting {
+  extendsFrom(configurations.implementation.get())
 }
 
 dependencies {
@@ -45,6 +53,8 @@ dependencies {
   testImplementation(libs.kotlin.test.junit4)
   testImplementation(libs.googleTruth)
   testImplementation(libs.junit)
+
+  benchmarksImplementation(libs.kotlinxBenchmarkRuntime)
 }
 
 val generateSources by tasks.registering {
@@ -100,6 +110,8 @@ kotlin {
 
   val javaVersion: String = rootProject.libs.versions.java.get()
   jvmToolchain(javaVersion.toInt())
+
+  target.compilations.getByName("benchmarks").associateWith(target.compilations.getByName("main"))
 
   sourceSets {
     main {
@@ -164,4 +176,20 @@ if (System.getenv("SIGN_BUILD") != null) {
     useGpgCmd()
     sign(publishing.publications["maven"])
   }
+}
+
+benchmark {
+  configurations {
+    named("main") {
+      warmups = 5
+      iterations = 5
+      iterationTime = 3
+      iterationTimeUnit = "s"
+      mode = "avgt"
+      outputTimeUnit = "ms"
+      reportFormat = "json"
+      advanced("jvmForks", 1)
+    }
+  }
+  targets { register("benchmarks") }
 }

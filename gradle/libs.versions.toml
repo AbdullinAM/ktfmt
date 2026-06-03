@@ -10,6 +10,7 @@ com-google-truth-truth = "1.0"
 junit-junit = "4.13.1"
 net-java-dev-jna-jna = "4.2.2"
 org-ec4j-core = "1.2.0"
+org-jetbrains-kotlinx-benchmark = "0.4.17"
 
 # plugins
 gradlePlugin-dokka = "2.2.0"
@@ -32,6 +33,7 @@ junit = { module = "junit:junit", version.ref = "junit-junit" }
 jna = { module = "net.java.dev.jna:jna", version.ref = "net-java-dev-jna-jna" }
 kotlin-compilerEmbeddable = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlinxBenchmarkRuntime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "org-jetbrains-kotlinx-benchmark" }
 kotlin-test-junit4 = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 
 [plugins]
@@ -39,6 +41,8 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "gradlePlugin-dokka" }
 dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "gradlePlugin-dokka" }
 intelliJPlatform = { id = "org.jetbrains.intellij.platform", version.ref = "gradlePlugin-intelliJPlatform" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlinAllopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" }
+kotlinxBenchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "org-jetbrains-kotlinx-benchmark" }
 ktfmt = { id = "com.ncorti.ktfmt.gradle", version.ref = "gradlePlugin-ktfmt" }
 nexusPublish = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "gradlePlugin-nexusPublish" }
 shadowJar = { id = "com.gradleup.shadow", version.ref = "gradlePlugin-shadowJar" }

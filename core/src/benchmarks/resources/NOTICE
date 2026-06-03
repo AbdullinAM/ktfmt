@@ -1,0 +1,58 @@
+Benchmark corpus — third-party sources
+======================================
+
+The Kotlin files in this directory are used SOLELY as input fixtures for
+ktfmt's performance benchmarks. They are not compiled into, executed by, or
+distributed as part of ktfmt. Each is licensed under the Apache License,
+Version 2.0, by its respective copyright holders.
+
+Layout
+------
+  original/  Unmodified snapshots pinned to a specific upstream release tag, in
+             each project's own style. ktfmt must reformat these. This is the
+             corpus, spanning a size range and distinct formatter code paths
+             (ordinary code, KDoc reflow, multiline strings, ...). The
+             idempotency benchmark derives its already-formatted ("preformatted")
+             inputs at runtime by running ktfmt over these to a fixed point.
+
+Pinning to fixed tags keeps benchmark scores comparable across ktfmt revisions.
+
+Provenance
+----------
+coroutines/Flow.kt        (small)
+  Project:   kotlinx.coroutines
+  Tag:       1.9.0
+  Source:    https://github.com/Kotlin/kotlinx.coroutines/blob/1.9.0/kotlinx-coroutines-core/common/src/flow/Flow.kt
+  Copyright: 2016-2024 JetBrains s.r.o. and contributors
+  License:   Apache License 2.0
+
+serialization/Json.kt     (medium)
+  Project:   kotlinx.serialization
+  Tag:       v1.7.3
+  Source:    https://github.com/Kotlin/kotlinx.serialization/blob/v1.7.3/formats/json/commonMain/src/kotlinx/serialization/json/Json.kt
+  Copyright: 2017-2024 JetBrains s.r.o.
+  License:   Apache License 2.0
+
+arrow/Either.kt           (large)
+  Project:   Arrow (arrow-core)
+  Tag:       1.2.4
+  Source:    https://github.com/arrow-kt/arrow/blob/1.2.4/arrow-libs/core/arrow-core/src/commonMain/kotlin/arrow/core/Either.kt
+  Copyright: The Arrow authors
+  License:   Apache License 2.0
+
+coroutines/Job.kt         (KDoc-heavy; exercises comment reflow)
+  Project:   kotlinx.coroutines
+  Tag:       1.9.0
+  Source:    https://github.com/Kotlin/kotlinx.coroutines/blob/1.9.0/kotlinx-coroutines-core/common/src/Job.kt
+  Copyright: 2016-2024 JetBrains s.r.o. and contributors
+  License:   Apache License 2.0
+
+kotlinpoet/FunSpecTest.kt (multiline-string-heavy; exercises MultilineStringFormatter)
+  Project:   KotlinPoet
+  Tag:       1.18.1
+  Source:    https://github.com/square/kotlinpoet/blob/1.18.1/kotlinpoet/src/commonTest/kotlin/com/squareup/kotlinpoet/FunSpecTest.kt
+  Copyright: 2015 Square, Inc.
+  License:   Apache License 2.0
+
+To refresh or add a fixture, download original/ from a fixed release tag (never
+a moving branch) and record its provenance above.
