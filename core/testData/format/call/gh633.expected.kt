@@ -1,0 +1,80 @@
+fun f() {
+  foo(
+      1,
+      2,
+  )
+}
+
+fun f() {
+  foo(
+      1,
+      2,
+  )
+      .bar()
+}
+
+fun f() {
+  foo(
+      1,
+      2,
+  )
+      .bar()
+}
+
+val x = foo(
+    1,
+    2,
+)
+
+val x = foo(
+    1,
+    2,
+)
+    .bar()
+
+val x by foo(
+    1,
+    2,
+)
+
+val x by foo(
+    1,
+    2,
+)
+    .bar()
+
+var x: Int
+  field = foo(
+      1,
+      2,
+  )
+
+var x: Int
+  field = foo(
+      1,
+      2,
+  )
+      .bar()
+
+val x = // comment
+    foo(
+        1,
+        2,
+    )
+
+val x = foo(
+    bar(
+        1,
+        2,
+    ),
+    3,
+)
+
+val x = foo(
+    bar(
+        1,
+        2,
+    )
+        .baz(),
+    3,
+)

@@ -1,0 +1,8 @@
+// STYLE GOOGLE
+// MAX_WIDTH 13
+
+bar(
+  FooOpClass
+    .doOp(1)
+    .doOp(2),
+)

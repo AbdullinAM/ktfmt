@@ -210,6 +210,16 @@ data class FormattingOptions(
           this.debuggingPrintOpsAfterFormatting = debuggingPrintOpsAfterFormatting
         }
 
+    fun set(options: FormattingOptions): Builder = apply {
+      maxWidth(options.maxWidth)
+      blockIndent(options.blockIndent)
+      continuationIndent(options.continuationIndent)
+      trailingCommaManagementStrategy(options.trailingCommaManagementStrategy)
+      removeUnusedImports(options.removeUnusedImports)
+      preserveLambdaBreaks(options.preserveLambdaBreaks)
+      debuggingPrintOpsAfterFormatting(debuggingPrintOpsAfterFormatting)
+    }
+
     /** Builds a new [FormattingOptions] from the current builder state. */
     fun build(): FormattingOptions = FormattingOptions(
         maxWidth = maxWidth,
