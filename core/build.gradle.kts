@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
+import com.facebook.ktfmt.GenerateFormatterTestTask
 import com.facebook.ktfmt.GenerateKtfmtFileTask
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+import kotlin.collections.getValue
+import kotlin.getValue
 
 plugins {
   kotlin("jvm")
@@ -27,6 +31,7 @@ plugins {
   id("maven-publish")
   id("signing")
   id("ktfmt.ktfmt-file-generator")
+  id("ktfmt.formatter-test-generator")
   id("ktfmt.native-image")
 }
 
@@ -52,6 +57,11 @@ dependencies {
 val generateSources by tasks.registering {
   outputs.dir(layout.buildDirectory.dir("generated/main/java"))
   dependsOn(tasks.withType<GenerateKtfmtFileTask>())
+}
+
+val generateTests by tasks.registering {
+  outputs.dir(layout.buildDirectory.dir("generated/test/java"))
+  dependsOn(tasks.withType<GenerateFormatterTestTask>())
 }
 
 tasks {
@@ -111,6 +121,11 @@ kotlin {
       kotlin {
         // Include generated code
         srcDir(generateSources)
+      }
+    }
+    test {
+      kotlin {
+        srcDir(generateTests)
       }
     }
   }

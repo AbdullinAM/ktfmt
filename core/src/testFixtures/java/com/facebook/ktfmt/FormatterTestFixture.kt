@@ -111,7 +111,7 @@ class FormatterTestFixture(
   }
 
   companion object {
-    val TEST_DATA_PATH: Path = Paths.get("testData")
+    val TEST_DATA_PATH: Path = Paths.get("testData/format/")
 
     val TEST_FILE_PATTERNS = listOf(
       ".expected.",
