@@ -19,8 +19,6 @@ import com.facebook.ktfmt.GenerateKtfmtFileTask
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
-import kotlin.collections.getValue
-import kotlin.getValue
 
 plugins {
   kotlin("jvm")

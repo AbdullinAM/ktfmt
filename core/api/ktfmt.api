@@ -87,6 +87,9 @@ public final class com/facebook/ktfmt/debughelpers/OpsDebugKt {
 
 public final class com/facebook/ktfmt/debughelpers/PrintAstVisitor : org/jetbrains/kotlin/psi/KtTreeVisitorVoid {
 	public fun <init> ()V
+	public fun <init> (Ljava/io/PrintStream;)V
+	public synthetic fun <init> (Ljava/io/PrintStream;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getPrinter ()Ljava/io/PrintStream;
 	public fun visitElement (Lorg/jetbrains/kotlin/com/intellij/psi/PsiElement;)V
 }
 
@@ -164,6 +167,7 @@ public final class com/facebook/ktfmt/format/FormattingOptions$Builder {
 	public final fun maxWidth (I)Lcom/facebook/ktfmt/format/FormattingOptions$Builder;
 	public final fun preserveLambdaBreaks (Z)Lcom/facebook/ktfmt/format/FormattingOptions$Builder;
 	public final fun removeUnusedImports (Z)Lcom/facebook/ktfmt/format/FormattingOptions$Builder;
+	public final fun set (Lcom/facebook/ktfmt/format/FormattingOptions;)Lcom/facebook/ktfmt/format/FormattingOptions$Builder;
 	public final fun trailingCommaManagementStrategy (Lcom/facebook/ktfmt/format/TrailingCommaManagementStrategy;)Lcom/facebook/ktfmt/format/FormattingOptions$Builder;
 }
 

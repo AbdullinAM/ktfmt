@@ -39,7 +39,7 @@ class ParserTest {
   @Test
   fun `ParseError contains correct line and column numbers`() {
     val code =
-      """
+        """
         |// Foo
         |fun good() {
         |  //
@@ -47,7 +47,7 @@ class ParserTest {
         |
         |fn (
         |"""
-        .trimMargin()
+            .trimMargin()
     try {
       Formatter.format(code)
       fail()

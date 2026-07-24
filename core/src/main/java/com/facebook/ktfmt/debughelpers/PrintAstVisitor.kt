@@ -16,9 +16,9 @@
 
 package com.facebook.ktfmt.debughelpers
 
+import java.io.PrintStream
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.psi.KtTreeVisitorVoid
-import java.io.PrintStream
 
 class PrintAstVisitor(val printer: PrintStream = System.out) : KtTreeVisitorVoid() {
   private var depth = 0

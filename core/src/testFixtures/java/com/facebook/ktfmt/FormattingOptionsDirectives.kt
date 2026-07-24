@@ -12,35 +12,35 @@ class FormattingOptionsDirectives(
   override val result: FormattingOptions
     get() = builder.build()
 
-  override val directives =
-      listOf(
-          FormattingOptionDirective("MAX_WIDTH") { builder.maxWidth(it.toInt()) },
-          FormattingOptionDirective("BLOCK_INDENT") { builder.blockIndent(it.toInt()) },
-          FormattingOptionDirective("CONTINUATION_INDENT") {
-            builder.continuationIndent(it.toInt())
-          },
-          FormattingOptionDirective("TRAILING_COMMA_STRATEGY") {
-            builder.trailingCommaManagementStrategy(TrailingCommaManagementStrategy.valueOf(it))
-          },
-          FormattingOptionDirective("REMOVE_UNUSED_IMPORTS") {
-            builder.removeUnusedImports(it.toBooleanStrict())
-          },
-          FormattingOptionDirective("PRESERVE_LAMBDA_BREAKS") {
-            builder.preserveLambdaBreaks(it.toBooleanStrict())
-          },
-          FormattingOptionDirective("PRINT_OPTS_AFTER_FORMATTING") {
-            builder.debuggingPrintOpsAfterFormatting(it.toBooleanStrict())
-          },
-          FormattingOptionDirective("STYLE") {
-              val formattingOptions = when (it) {
-                  "KOTLINLANG" -> Formatter.KOTLINLANG_FORMAT
-                  "GOOGLE" -> Formatter.GOOGLE_FORMAT
-                  "META" -> Formatter.META_FORMAT
-                  else -> error("Unknown formatting style: $it")
-              }
-              builder.set(formattingOptions)
-          },
-      )
+  override val directives = listOf(
+      FormattingOptionDirective("MAX_WIDTH") { builder.maxWidth(it.toInt()) },
+      FormattingOptionDirective("BLOCK_INDENT") { builder.blockIndent(it.toInt()) },
+      FormattingOptionDirective("CONTINUATION_INDENT") {
+        builder.continuationIndent(it.toInt())
+      },
+      FormattingOptionDirective("TRAILING_COMMA_STRATEGY") {
+        builder.trailingCommaManagementStrategy(TrailingCommaManagementStrategy.valueOf(it))
+      },
+      FormattingOptionDirective("REMOVE_UNUSED_IMPORTS") {
+        builder.removeUnusedImports(it.toBooleanStrict())
+      },
+      FormattingOptionDirective("PRESERVE_LAMBDA_BREAKS") {
+        builder.preserveLambdaBreaks(it.toBooleanStrict())
+      },
+      FormattingOptionDirective("PRINT_OPTS_AFTER_FORMATTING") {
+        builder.debuggingPrintOpsAfterFormatting(it.toBooleanStrict())
+      },
+      FormattingOptionDirective("STYLE") {
+        val formattingOptions =
+            when (it) {
+              "KOTLINLANG" -> Formatter.KOTLINLANG_FORMAT
+              "GOOGLE" -> Formatter.GOOGLE_FORMAT
+              "META" -> Formatter.META_FORMAT
+              else -> error("Unknown formatting style: $it")
+            }
+        builder.set(formattingOptions)
+      },
+  )
 
   data class FormattingOptionDirective(
       override val name: String,

@@ -56,8 +56,8 @@ class FormatterTestFixture(
 
       Assert.fail(
           "Formatter output does not match expected code.\n" +
-                  "See ${actualFile.toAbsolutePath()}.\n" +
-                  buildParseTree(sourceCode)
+              "See ${actualFile.toAbsolutePath()}.\n" +
+              buildParseTree(sourceCode),
       )
     }
     if (testOptions.checkIdempotency) {
@@ -75,7 +75,7 @@ class FormatterTestFixture(
         Assert.fail(
             "Formatter output is not idempotent.\n" +
                 "See ${firstReformatFile.toAbsolutePath()} and ${secondReformatFile.toAbsolutePath()}.\n" +
-                buildParseTree(sourceCode)
+                buildParseTree(sourceCode),
         )
       }
     }
@@ -112,13 +112,6 @@ class FormatterTestFixture(
 
   companion object {
     val TEST_DATA_PATH: Path = Paths.get("testData/format/")
-
-    val TEST_FILE_PATTERNS = listOf(
-      ".expected.",
-      ".actual.",
-      ".reformat1.",
-      ".reformat2.",
-    )
 
     fun Path.resolveSiblingBySuffix(suffix: String): Path {
       val fileName = this.fileName

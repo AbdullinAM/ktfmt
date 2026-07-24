@@ -7,24 +7,22 @@ data class FormatterTestOptions(
 
 class FormatterTestDirectives : DirectiveContainer<FormatterTestOptions> {
   override val result
-    get() =
-        FormatterTestOptions(
-            allowTrailingWhitespace = allowTrailingWhitespace,
-            checkIdempotency = checkIdempotency,
-        )
+    get() = FormatterTestOptions(
+        allowTrailingWhitespace = allowTrailingWhitespace,
+        checkIdempotency = checkIdempotency,
+    )
 
   var allowTrailingWhitespace: Boolean = false
   var checkIdempotency: Boolean = true
 
-  override val directives =
-      listOf(
-          FormatterTestOptionsDirective("ALLOW_TRAILING_WHITESPACE") {
-            allowTrailingWhitespace = true
-          },
-          FormatterTestOptionsDirective("CHECK_IDEMPOTENCY") {
-              checkIdempotency = it.toBooleanStrict()
-          },
-      )
+  override val directives = listOf(
+      FormatterTestOptionsDirective("ALLOW_TRAILING_WHITESPACE") {
+        allowTrailingWhitespace = true
+      },
+      FormatterTestOptionsDirective("CHECK_IDEMPOTENCY") {
+        checkIdempotency = it.toBooleanStrict()
+      },
+  )
 
   data class FormatterTestOptionsDirective(
       override val name: String,
