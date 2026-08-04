@@ -25,3 +25,8 @@ release-ktfmt-website/
 **/build/
 !src/**/build/
 .claude/
+
+### Tests ###
+*.actual.kt
+*.reformat1.kt
+*.reformat2.kt

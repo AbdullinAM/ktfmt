@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
+import com.facebook.ktfmt.GenerateFormatterTestTask
 import com.facebook.ktfmt.GenerateKtfmtFileTask
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
 plugins {
   kotlin("jvm")
+  id("java-test-fixtures")
   alias(libs.plugins.dokka)
   alias(libs.plugins.dokka.javadoc)
   alias(libs.plugins.shadowJar)
   id("maven-publish")
   id("signing")
   id("ktfmt.ktfmt-file-generator")
+  id("ktfmt.formatter-test-generator")
   id("ktfmt.native-image")
 }
 
@@ -41,9 +45,11 @@ dependencies {
   api(libs.kotlin.stdlib)
   api(libs.kotlin.compilerEmbeddable)
   implementation(libs.ec4j)
+
+  testFixturesApi(libs.googleTruth)
+  testFixturesApi(libs.junit)
+  testFixturesImplementation(libs.kotlin.test.junit4)
   testImplementation(libs.kotlin.test.junit4)
-  testImplementation(libs.googleTruth)
-  testImplementation(libs.junit)
 }
 
 val generateSources by tasks.registering {
@@ -51,9 +57,18 @@ val generateSources by tasks.registering {
   dependsOn(tasks.withType<GenerateKtfmtFileTask>())
 }
 
+val generateTests by tasks.registering {
+  outputs.dir(layout.buildDirectory.dir("generated/test/java"))
+  dependsOn(tasks.withType<GenerateFormatterTestTask>())
+}
+
 tasks {
   // Run tests with UTF-16 encoding
-  test { jvmArgs("-Dfile.encoding=UTF-16") }
+  test {
+    jvmArgs("-Dfile.encoding=UTF-16")
+    // Forward the test-migration dump directory (see KtfmtDump) to the forked test JVM.
+    System.getProperty("ktfmt.dump.dir")?.let { systemProperty("ktfmt.dump.dir", it) }
+  }
 
   // Handle multiple versions of Kotlin here
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -104,6 +119,11 @@ kotlin {
       kotlin {
         // Include generated code
         srcDir(generateSources)
+      }
+    }
+    test {
+      kotlin {
+        srcDir(generateTests)
       }
     }
   }

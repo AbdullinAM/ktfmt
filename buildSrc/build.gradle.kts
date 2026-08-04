@@ -28,6 +28,10 @@ gradlePlugin {
       id = "ktfmt.ktfmt-file-generator"
       implementationClass = "com.facebook.ktfmt.GenerateKtfmtFilePlugin"
     }
+    register("formatter-test-generator") {
+      id = "ktfmt.formatter-test-generator"
+      implementationClass = "com.facebook.ktfmt.GenerateFormatterTestPlugin"
+    }
     register("native-image") {
       id = "ktfmt.native-image"
       implementationClass = "com.facebook.ktfmt.NativeImagePlugin"

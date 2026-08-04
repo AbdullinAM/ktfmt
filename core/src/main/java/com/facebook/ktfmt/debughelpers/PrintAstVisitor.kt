@@ -16,15 +16,16 @@
 
 package com.facebook.ktfmt.debughelpers
 
+import java.io.PrintStream
 import org.jetbrains.kotlin.com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.psi.KtTreeVisitorVoid
 
-class PrintAstVisitor : KtTreeVisitorVoid() {
+class PrintAstVisitor(val printer: PrintStream = System.out) : KtTreeVisitorVoid() {
   private var depth = 0
 
   override fun visitElement(element: PsiElement) {
-    print("  ".repeat(depth))
-    println("${element.javaClass.simpleName} ${element.text?.replace("\n", "\\n")}")
+    printer.print("  ".repeat(depth))
+    printer.println("${element.javaClass.simpleName} ${element.text?.replace("\n", "\\n")}")
     depth++
     super.visitElement(element)
     depth--

@@ -17,6 +17,7 @@
 package com.facebook.ktfmt.format
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Assert.fail
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -33,5 +34,65 @@ class ParserTest {
   fun `parsing sets idea_use_native_fs_for_win to false`() {
     Parser.parse("val a = 1")
     assertThat(System.getProperty("idea.use.native.fs.for.win")).isEqualTo("false")
+  }
+
+  @Test
+  fun `ParseError contains correct line and column numbers`() {
+    val code =
+        """
+        |// Foo
+        |fun good() {
+        |  //
+        |}
+        |
+        |fn (
+        |"""
+            .trimMargin()
+    try {
+      Formatter.format(code)
+      fail()
+    } catch (e: ParseError) {
+      assertThat(e.lineColumn.line).isEqualTo(6)
+      assertThat(e.lineColumn.column).isEqualTo(0)
+      assertThat(e.errorDescription).containsMatch("Expecting an (expression|argument)")
+    }
+  }
+
+  @Test
+  fun `Code with tombstones is not supported`() {
+    val code =
+        """
+        |fun good() {
+        |  // ${'\u0003'}
+        |}
+        |"""
+            .trimMargin()
+    try {
+      Formatter.format(code)
+      fail()
+    } catch (e: ParseError) {
+      assertThat(e.errorDescription).contains("\\u0003")
+      assertThat(e.lineColumn.line).isEqualTo(1)
+      assertThat(e.lineColumn.column).isEqualTo(5)
+    }
+  }
+
+  @Test
+  fun `fail() reports line+column number`() {
+    val code =
+        """
+        |// Foo
+        |fun good() {
+        |  return@ 5
+        |}
+        |"""
+            .trimMargin()
+    try {
+      Formatter.format(code)
+      fail()
+    } catch (e: ParseError) {
+      assertThat(e.lineColumn.line).isEqualTo(2)
+      assertThat(e.lineColumn.column).isEqualTo(8)
+    }
   }
 }
